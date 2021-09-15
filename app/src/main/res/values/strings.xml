@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ktsApplication</string>
+    <string name="welcomeText">Welcome to Strava</string>
+    <string name="welcomeButtonText">Let`s GO!</string>
+</resources>

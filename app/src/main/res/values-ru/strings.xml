@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ktsApplication</string>
+    <string name="welcomeText">Добро пожаловать в Strava</string>
+    <string name="welcomeButtonText">Начнём!</string>
+</resources>
