@@ -3,21 +3,49 @@ package com.bignerdranch.android.ktsapplication
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import android.widget.TextView
+import timber.log.Timber
+
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var textView: TextView
+
+    private lateinit var sActbutton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        Timber.plant(Timber.DebugTree())
+        Timber.d("OnCreate MainActivity")
 
-        val textView = findViewById<TextView>(R.id.textView)
+    }
 
-        findViewById<Button>(R.id.start_button).setOnClickListener {
-            val newText = "Wow Lovely"
-            textView.text = newText
-        }
+    override fun onStart() {
+        super.onStart()
+        Timber.d("onStart MainActivity")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Timber.d("onResume MainActivity")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Timber.d("onPause MainActivity")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Timber.d("onStop MainActivity")
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Timber.d("onRestart MainActivity")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Timber.d("onDestroy MainActivity")
     }
 }
