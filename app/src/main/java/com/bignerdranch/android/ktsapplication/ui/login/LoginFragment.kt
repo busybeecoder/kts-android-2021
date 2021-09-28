@@ -11,14 +11,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bignerdranch.android.ktsapplication.R
 import com.bignerdranch.android.ktsapplication.databinding.FragmentLoginBinding
-import timber.log.Timber
 
 class LoginFragment : Fragment() {
 
-    private lateinit var loginViewModel: LoginViewModel
+    private val loginViewModel: LoginViewModel? by viewModels()
     private var _binding: FragmentLoginBinding? = null
 
     // This property is only valid between onCreateView and
@@ -31,21 +31,18 @@ class LoginFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Timber.d("onCreateView")
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Timber.d("onViewCreated")
-        loginViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
 
         val emailEditText = binding.email
         val passwordEditText = binding.password
         val loginButton = binding.login
 
-        loginViewModel.loginFormState.observe(viewLifecycleOwner,
+        loginViewModel?.loginFormState?.observe(viewLifecycleOwner,
             Observer { loginFormState ->
                 if (loginFormState == null) {
                     return@Observer
@@ -69,7 +66,7 @@ class LoginFragment : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable) {
-                loginViewModel.loginDataChanged(
+                loginViewModel?.loginDataChanged(
                     emailEditText.text.toString(),
                     passwordEditText.text.toString()
                 )
@@ -81,7 +78,7 @@ class LoginFragment : Fragment() {
 
         passwordEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                loginViewModel.loginDataChanged(
+                loginViewModel?.loginDataChanged(
                     emailEditText.text.toString(),
                     passwordEditText.text.toString()
                 )
@@ -90,17 +87,12 @@ class LoginFragment : Fragment() {
         }
 
         loginButton.setOnClickListener {
-            loginViewModel.loginDataChanged(
-                emailEditText.text.toString(),
-                passwordEditText.text.toString()
-            )
             findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Timber.d("onDestroyView")
         _binding = null
     }
 }

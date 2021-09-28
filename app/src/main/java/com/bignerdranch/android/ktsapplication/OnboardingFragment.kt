@@ -12,29 +12,27 @@ import timber.log.Timber
 
 class OnboardingFragment : Fragment() {
 
-    private lateinit var button: Button
+    private var button: Button? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Timber.d("OnCreateView ${hashCode()}")
         val view = inflater.inflate(R.layout.fragment_onboarding, container, false)
-        button = view.findViewById(R.id.start_button) as Button
+        button = view.findViewById(R.id.startButton) as Button?
         return view
     }
 
     override fun onStart() {
         super.onStart()
-        Timber.d("onStart ${hashCode()}")
-        button.setOnClickListener {
+        button?.setOnClickListener {
             findNavController().navigate(R.id.action_onboardingFragment_to_loginFragment)
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Timber.d("onDestroyView")
+        button = null
     }
 }

@@ -7,7 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="orangeVertical">#FDE1B7</color>
-    <color name="orangeButton">#FD9E0E</color>
-    <color name="orangeHorizontal">#F6BCA9</color>
+    <color name="light_apricot">#FDE1B7</color>
+    <color name="california">#FD9E0E</color>
+    <color name="manhattan">#F6BCA9</color>
 </resources>
