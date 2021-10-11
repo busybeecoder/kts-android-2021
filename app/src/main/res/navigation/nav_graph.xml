@@ -31,5 +31,13 @@
         android:id="@+id/homeFragment"
         android:name="com.bignerdranch.android.ktsapplication.HomeFragment"
         android:label="HomeFragment"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_homeFragment_to_fullActivityFragment"
+            app:destination="@id/fullActivityFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fullActivityFragment"
+        android:name="com.bignerdranch.android.ktsapplication.FullActivityFragment"
+        android:label="FullActivityFragment" />
 </navigation>

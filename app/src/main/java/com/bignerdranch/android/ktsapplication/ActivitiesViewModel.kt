@@ -21,13 +21,13 @@ class ActivitiesViewModel : ViewModel() {
     val isLoading: LiveData<Boolean>
         get() = isLoadingLiveData
 
-    fun getListActivities(before: Int, after: Int) {
+    fun getListActivities() {
         isLoadingLiveData.postValue(true)
         getActivitiesJob?.cancel()
         getActivitiesJob = viewModelScope.launch {
             runCatching {
                 Log.d("tag", "getAthletes()")
-                repository.getAthleteActivities(before, after)
+                repository.getActivities()
             }.onSuccess {
                 Log.d("tag", "onSuccess: $it")
                 isLoadingLiveData.postValue(false)

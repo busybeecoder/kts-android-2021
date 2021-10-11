@@ -38,10 +38,8 @@ class AuthRepository {
         authService.performTokenRequest(tokenRequest, getClientAuthentication()) { response, ex ->
             when {
                 response != null -> {
-                    //TODO save access token
                     val accessToken = response.accessToken.orEmpty()
                     AuthToken.token = accessToken
-                    Log.d("tag","Auth.token: ${AuthToken.token}")
                     onComplete()
                 }
                 else -> onError()
