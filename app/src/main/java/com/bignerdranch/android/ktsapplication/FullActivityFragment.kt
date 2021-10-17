@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -15,13 +16,20 @@ import java.security.Policy
 class FullActivityFragment : Fragment(R.layout.image_post) {
 
     private val viewModel: FullActivityViewModel by viewModels()
+    private val dataViewModel: DataViewModel by activityViewModels()
 
     private val binding by viewBinding(ImagePostBinding::bind)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("tag", "FullActivityFragment.onViewCreated()")
-        viewModel.getActivityById(id = ACTIVITY_ID, include_all_efforts = true)
+//        Log.d("tag", "FullActivityFragment.onViewCreated()")
+//        viewModel.getActivityById(id = ACTIVITY_ID, include_all_efforts = true)
+        dataViewModel.activityId.value?.let {
+            viewModel.getActivityById(
+                id = it,
+                include_all_efforts = true
+            )
+        }
         bindViewModel()
     }
 

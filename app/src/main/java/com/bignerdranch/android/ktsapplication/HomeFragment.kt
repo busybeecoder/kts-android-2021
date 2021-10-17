@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +17,7 @@ class HomeFragment : Fragment(R.layout.fragment_main) {
 
     private val binding: FragmentMainBinding by viewBinding(FragmentMainBinding::bind)
     private val activitiesViewModel: ActivitiesViewModel by viewModels()
+    private val dataViewModel: DataViewModel by activityViewModels()
     private var activitiesAdapter: DelegatesListAdapter by autoCleared()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -28,6 +30,7 @@ class HomeFragment : Fragment(R.layout.fragment_main) {
         activitiesAdapter = DelegatesListAdapter(
             detailedActivity = { activities ->
                 Log.d("tag", "activity id = ${activities.id}")
+                dataViewModel.activityId.value = activities.id
                 findNavController().navigate(R.id.action_homeFragment_to_fullActivityFragment)
 
             }
