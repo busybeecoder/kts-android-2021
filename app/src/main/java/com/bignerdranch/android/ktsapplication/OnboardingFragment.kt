@@ -16,7 +16,7 @@ class OnboardingFragment : Fragment(R.layout.fragment_onboarding) {
         super.onViewCreated(view, savedInstanceState)
         val button = binding.startButton
         button.setOnClickListener {
-            findNavController().navigate(R.id.action_onboardingFragment_to_loginFragment)
+            findNavController().navigate(R.id.action_onboardingFragment_to_authFragment)
         }
     }
 

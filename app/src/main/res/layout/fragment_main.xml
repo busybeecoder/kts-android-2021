@@ -11,10 +11,10 @@
         android:id="@+id/feed"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#DFDEDE"
+        android:background="@color/light_apricot"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
 
-        tools:listitem="@layout/image_post" />
+        tools:listitem="@layout/activities" />
 </androidx.constraintlayout.widget.ConstraintLayout>

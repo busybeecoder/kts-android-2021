@@ -4,21 +4,20 @@ import android.annotation.SuppressLint
 import androidx.recyclerview.widget.DiffUtil
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 
-class FeedDelegateListAdapter : AsyncListDifferDelegationAdapter<Any>(ComplexDiffCallback()) {
+class DelegatesListAdapter(
+    detailedActivity: (item: Activities) -> Unit
+) : AsyncListDifferDelegationAdapter<Any>(ComplexDiffCallback()) {
 
     init {
         delegatesManager
-            .addDelegate(PostImageDelegate())
-            .addDelegate(PostTextDelegate())
+            .addDelegate(ActivitiesAdapterDelegate(detailedActivity))
             .addDelegate(PageLoadingDelegate())
     }
 
     class ComplexDiffCallback : DiffUtil.ItemCallback<Any>() {
-
         override fun areItemsTheSame(first: Any, second: Any): Boolean {
             return first.javaClass == second.javaClass && when (first) {
-                is PostImage -> first.uuid == (second as PostImage).uuid
-                is PostText -> first.uuid == (second as PostText).uuid
+                is Activities -> first.id == (second as Activities).id
                 else -> true
             }
         }

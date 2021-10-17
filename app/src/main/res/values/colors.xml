@@ -10,4 +10,7 @@
     <color name="light_apricot">#FDE1B7</color>
     <color name="california">#FD9E0E</color>
     <color name="manhattan">#F6BCA9</color>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#FD9E0E</color>
 </resources>
