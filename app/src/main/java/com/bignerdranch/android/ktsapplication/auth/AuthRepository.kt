@@ -1,7 +1,6 @@
 package com.bignerdranch.android.ktsapplication.auth
 
 import android.net.Uri
-import android.util.Log
 import net.openid.appauth.AuthorizationRequest
 import net.openid.appauth.AuthorizationService
 import net.openid.appauth.AuthorizationServiceConfiguration
