@@ -18,6 +18,7 @@ class HomeFragment : Fragment(R.layout.fragment_main) {
     private val binding: FragmentMainBinding by viewBinding(FragmentMainBinding::bind)
     private val activitiesViewModel: ActivitiesViewModel by viewModels()
     private val dataViewModel: DataViewModel by activityViewModels()
+    private val viewModelWorkout by viewModels<WorkoutViewModel>()
     private var activitiesAdapter: DelegatesListAdapter by autoCleared()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -47,7 +48,15 @@ class HomeFragment : Fragment(R.layout.fragment_main) {
     private fun bindViewModel() {
         activitiesViewModel.activitiesList.observe(
             viewLifecycleOwner,
-            { activitiesAdapter.items = it })
+            {
+                activitiesAdapter.items = it
+                viewModelWorkout.save(
+                    it[0].id,
+                    it[0].name,
+                    it[0].distance,
+                    it[0].likes
+                )
+            })
         activitiesViewModel.isLoading.observe(
             viewLifecycleOwner,
             { enableControls(it.not()) })
