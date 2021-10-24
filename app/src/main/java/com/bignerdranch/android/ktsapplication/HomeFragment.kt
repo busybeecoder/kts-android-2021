@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bignerdranch.android.ktsapplication.databinding.FragmentMainBinding
+import kotlinx.coroutines.flow.collect
 
 class HomeFragment : Fragment(R.layout.fragment_main) {
 
@@ -19,12 +20,31 @@ class HomeFragment : Fragment(R.layout.fragment_main) {
     private val activitiesViewModel: ActivitiesViewModel by viewModels()
     private val dataViewModel: DataViewModel by activityViewModels()
     private val viewModelWorkout by viewModels<WorkoutViewModel>()
+    private val workoutListViewModel by viewModels<WorkoutListViewModel>()
     private var activitiesAdapter: DelegatesListAdapter by autoCleared()
+    private var workoutListAdapter: WorkoutListAdapter by autoCleared()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initList()
-        bindViewModel()
+        if (isOnline(requireContext())) {
+            bindViewModel()
+        } else {
+            initListWorkout()
+            bindViewModelWorkout()
+        }
+    }
+
+    private fun initListWorkout() {
+        workoutListAdapter = WorkoutListAdapter(::navigateTofullActivityFragment)
+        with(binding.feed) {
+            adapter = workoutListAdapter
+            setHasFixedSize(true)
+        }
+    }
+
+    private fun navigateTofullActivityFragment(workout: Workout) {
+        findNavController().navigate(R.id.action_homeFragment_to_fullActivityFragment)
     }
 
     private fun initList() {
@@ -33,7 +53,6 @@ class HomeFragment : Fragment(R.layout.fragment_main) {
                 Log.d("tag", "activity id = ${activities.id}")
                 dataViewModel.activityId.value = activities.id
                 findNavController().navigate(R.id.action_homeFragment_to_fullActivityFragment)
-
             }
         )
         binding.feed.apply {
@@ -50,12 +69,14 @@ class HomeFragment : Fragment(R.layout.fragment_main) {
             viewLifecycleOwner,
             {
                 activitiesAdapter.items = it
-                viewModelWorkout.save(
-                    it[0].id,
-                    it[0].name,
-                    it[0].distance,
-                    it[0].likes
-                )
+                for (item in it) {
+                    viewModelWorkout.save(
+                        item.id,
+                        item.name,
+                        item.distance,
+                        item.likes
+                    )
+                }
             })
         activitiesViewModel.isLoading.observe(
             viewLifecycleOwner,
@@ -65,5 +86,13 @@ class HomeFragment : Fragment(R.layout.fragment_main) {
 
     private fun enableControls(enable: Boolean) = with(binding) {
 
+    }
+
+    private fun bindViewModelWorkout() {
+        viewLifecycleOwner.launchOnStartedState {
+            workoutListViewModel.workoutsFlow.collect {
+                workoutListAdapter.items = it
+            }
+        }
     }
 }
