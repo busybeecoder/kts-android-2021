@@ -3,6 +3,7 @@ package com.bignerdranch.android.ktsapplication
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -68,15 +69,20 @@ class HomeFragment : Fragment(R.layout.fragment_main) {
         activitiesViewModel.activitiesList.observe(
             viewLifecycleOwner,
             {
-                activitiesAdapter.items = it
-                for (item in it) {
-                    viewModelWorkout.save(
-                        item.id,
-                        item.name,
-                        item.distance,
-                        item.likes
-                    )
+                if (it == null) {
+                    Toast.makeText(activity, "no activities", Toast.LENGTH_LONG).show()
+                } else {
+                    activitiesAdapter.items = it
+                    for (item in it) {
+                        viewModelWorkout.save(
+                            item.id,
+                            item.name,
+                            item.distance,
+                            item.likes
+                        )
+                    }
                 }
+
             })
         activitiesViewModel.isLoading.observe(
             viewLifecycleOwner,
