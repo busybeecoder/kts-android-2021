@@ -15,7 +15,7 @@ import net.openid.appauth.TokenRequest
 
 class AuthViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val authRepository = AuthRepository()
+    private val authRepository = AuthRepository(application)
     private val authService: AuthorizationService = AuthorizationService(getApplication())
     private val openAuthPageLiveEvent =
         SingleLiveEvent<Intent>()

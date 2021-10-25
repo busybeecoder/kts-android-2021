@@ -39,5 +39,7 @@
     <fragment
         android:id="@+id/fullActivityFragment"
         android:name="com.bignerdranch.android.ktsapplication.FullActivityFragment"
-        android:label="FullActivityFragment" />
+        android:label="FullActivityFragment"
+        tools:layout="@layout/image_post">
+    </fragment>
 </navigation>

@@ -1,7 +1,6 @@
 package com.bignerdranch.android.ktsapplication
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -10,8 +9,6 @@ import androidx.lifecycle.Observer
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bignerdranch.android.ktsapplication.databinding.ImagePostBinding
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CircleCrop
-import java.security.Policy
 
 class FullActivityFragment : Fragment(R.layout.image_post) {
 
@@ -22,8 +19,6 @@ class FullActivityFragment : Fragment(R.layout.image_post) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        Log.d("tag", "FullActivityFragment.onViewCreated()")
-//        viewModel.getActivityById(id = ACTIVITY_ID, include_all_efforts = true)
         dataViewModel.activityId.value?.let {
             viewModel.getActivityById(
                 id = it,
