@@ -1,8 +1,7 @@
 package com.bignerdranch.android.ktsapplication.auth
 
-import android.content.Context
 import android.net.Uri
-import com.bignerdranch.android.ktsapplication.SharedPrefs
+import android.util.Log
 import net.openid.appauth.AuthorizationRequest
 import net.openid.appauth.AuthorizationService
 import net.openid.appauth.AuthorizationServiceConfiguration
@@ -10,9 +9,7 @@ import net.openid.appauth.ClientAuthentication
 import net.openid.appauth.ClientSecretPost
 import net.openid.appauth.TokenRequest
 
-class AuthRepository(context: Context) {
-
-    private val sharedPrefs = SharedPrefs(context)
+class AuthRepository {
 
     fun getAuthRequest(): AuthorizationRequest {
         val serviceConfiguration = AuthorizationServiceConfiguration(
@@ -42,9 +39,7 @@ class AuthRepository(context: Context) {
             when {
                 response != null -> {
                     val accessToken = response.accessToken.orEmpty()
-                    val refreshToken = response.refreshToken.orEmpty()
-                    sharedPrefs.saveString(accessToken, "token")
-                    sharedPrefs.saveString(refreshToken, "refresh_token")
+                    AuthToken.token = accessToken
                     onComplete()
                 }
                 else -> onError()

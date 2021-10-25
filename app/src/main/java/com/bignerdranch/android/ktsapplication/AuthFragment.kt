@@ -1,7 +1,6 @@
 package com.bignerdranch.android.ktsapplication
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -20,12 +19,7 @@ class AuthFragment : Fragment(R.layout.fragment_auth) {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val sharedPrefs = SharedPrefs(requireContext())
-        if (sharedPrefs.token != null) {
-            findNavController().navigate(R.id.action_authFragment_to_homeFragment)
-        } else {
-            bindViewModel()
-        }
+        bindViewModel()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
