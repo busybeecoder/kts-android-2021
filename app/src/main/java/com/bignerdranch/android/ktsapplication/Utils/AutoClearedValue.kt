@@ -1,4 +1,4 @@
-package com.bignerdranch.android.ktsapplication
+package com.bignerdranch.android.ktsapplication.Utils
 
 import androidx.annotation.NonNull
 import androidx.fragment.app.Fragment

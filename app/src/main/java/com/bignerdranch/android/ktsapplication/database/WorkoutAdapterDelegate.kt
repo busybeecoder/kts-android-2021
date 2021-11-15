@@ -1,7 +1,8 @@
-package com.bignerdranch.android.ktsapplication
+package com.bignerdranch.android.ktsapplication.database
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bignerdranch.android.ktsapplication.bindingInflate
 import com.bignerdranch.android.ktsapplication.databinding.ActivitiesBinding
 import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
 

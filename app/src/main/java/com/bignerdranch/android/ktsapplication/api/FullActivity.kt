@@ -1,4 +1,4 @@
-package com.bignerdranch.android.ktsapplication
+package com.bignerdranch.android.ktsapplication.api
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

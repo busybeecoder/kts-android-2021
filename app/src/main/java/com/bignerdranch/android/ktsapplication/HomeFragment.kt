@@ -2,18 +2,30 @@ package com.bignerdranch.android.ktsapplication
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.bignerdranch.android.ktsapplication.Utils.SharedPrefs
+import com.bignerdranch.android.ktsapplication.Utils.autoCleared
+import com.bignerdranch.android.ktsapplication.api.ActivitiesViewModel
+import com.bignerdranch.android.ktsapplication.auth.AuthToken.token
+import com.bignerdranch.android.ktsapplication.database.Workout
+import com.bignerdranch.android.ktsapplication.database.WorkoutViewModel
 import com.bignerdranch.android.ktsapplication.databinding.FragmentMainBinding
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class HomeFragment : Fragment(R.layout.fragment_main) {
 
@@ -25,10 +37,33 @@ class HomeFragment : Fragment(R.layout.fragment_main) {
     private var activitiesAdapter: DelegatesListAdapter by autoCleared()
     private var workoutListAdapter: WorkoutListAdapter by autoCleared()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.nav_app_bar, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.exit -> {
+            Log.d("Clicked", "EXit")
+            findNavController().navigate(R.id.action_homeFragment_to_onboardingFragment)
+            true
+        }
+        else -> {
+            // If we got here, the user's action was not recognized.
+            // Invoke the superclass to handle it.
+            super.onOptionsItemSelected(item)
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initList()
         if (isOnline(requireContext())) {
+            initList()
             bindViewModel()
         } else {
             initListWorkout()
@@ -36,10 +71,19 @@ class HomeFragment : Fragment(R.layout.fragment_main) {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("Clicked", "EXit")
+        token = null
+    }
+
     private fun initListWorkout() {
         workoutListAdapter = WorkoutListAdapter(::navigateTofullActivityFragment)
         with(binding.feed) {
+            val orientation = RecyclerView.VERTICAL
             adapter = workoutListAdapter
+            layoutManager = LinearLayoutManager(context, orientation, false)
+            addItemDecoration(DividerItemDecoration(context, orientation))
             setHasFixedSize(true)
         }
     }
@@ -51,12 +95,12 @@ class HomeFragment : Fragment(R.layout.fragment_main) {
     private fun initList() {
         activitiesAdapter = DelegatesListAdapter(
             detailedActivity = { activities ->
-                Log.d("tag", "activity id = ${activities.id}")
+                Timber.d("activity id = " + activities.id)
                 dataViewModel.activityId.value = activities.id
                 findNavController().navigate(R.id.action_homeFragment_to_fullActivityFragment)
             }
         )
-        binding.feed.apply {
+        with(binding.feed) {
             val orientation = RecyclerView.VERTICAL
             adapter = activitiesAdapter
             layoutManager = LinearLayoutManager(context, orientation, false)
@@ -84,18 +128,11 @@ class HomeFragment : Fragment(R.layout.fragment_main) {
                 }
 
             })
-        activitiesViewModel.isLoading.observe(
-            viewLifecycleOwner,
-            { enableControls(it.not()) })
         activitiesViewModel.getListActivities()
     }
 
-    private fun enableControls(enable: Boolean) = with(binding) {
-
-    }
-
     private fun bindViewModelWorkout() {
-        viewLifecycleOwner.launchOnStartedState {
+        viewLifecycleOwner.lifecycleScope.launch {
             workoutListViewModel.workoutsFlow.collect {
                 workoutListAdapter.items = it
             }

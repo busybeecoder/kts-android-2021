@@ -1,6 +1,8 @@
 package com.bignerdranch.android.ktsapplication
 
 import androidx.recyclerview.widget.DiffUtil
+import com.bignerdranch.android.ktsapplication.database.Workout
+import com.bignerdranch.android.ktsapplication.database.WorkoutAdapterDelegate
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 
 class WorkoutListAdapter(
