@@ -2,6 +2,9 @@ package com.bignerdranch.android.ktsapplication
 
 import android.annotation.SuppressLint
 import androidx.recyclerview.widget.DiffUtil
+import com.bignerdranch.android.ktsapplication.Utils.PageLoadingDelegate
+import com.bignerdranch.android.ktsapplication.api.Activities
+import com.bignerdranch.android.ktsapplication.api.ActivitiesAdapterDelegate
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 
 class DelegatesListAdapter(

@@ -1,4 +1,4 @@
-package com.bignerdranch.android.ktsapplication
+package com.bignerdranch.android.ktsapplication.database
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

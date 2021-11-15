@@ -1,23 +1,16 @@
-package com.bignerdranch.android.ktsapplication
+package com.bignerdranch.android.ktsapplication.database
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bignerdranch.android.ktsapplication.database.Workout
+import com.bignerdranch.android.ktsapplication.database.WorkoutRepository
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 class WorkoutViewModel : ViewModel() {
     private val workoutRepository = WorkoutRepository()
-    private val saveError = Channel<Int>(Channel.BUFFERED)
+    private val saveError = Channel<String>(Channel.BUFFERED)
     private val saveSuccess = Channel<Unit>(Channel.BUFFERED)
-
-
-    val saveSuccessFlow: Flow<Unit>
-        get() = saveSuccess.receiveAsFlow()
-
-    val saveErrorFlow: Flow<Int>
-        get() = saveError.receiveAsFlow()
 
     fun save(
         id: Long,
@@ -34,8 +27,12 @@ class WorkoutViewModel : ViewModel() {
         )
 
         viewModelScope.launch {
-            workoutRepository.saveWorkout(workout)
-            saveSuccess.send(Unit)
+            try {
+                workoutRepository.saveWorkout(workout)
+                saveSuccess.send(Unit)
+            } catch (t: Throwable) {
+                saveError.send("workout save error")
+            }
         }
     }
 }

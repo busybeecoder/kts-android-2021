@@ -2,7 +2,7 @@ package com.bignerdranch.android.ktsapplication.auth
 
 import android.content.Context
 import android.net.Uri
-import com.bignerdranch.android.ktsapplication.SharedPrefs
+import com.bignerdranch.android.ktsapplication.Utils.SharedPrefs
 import net.openid.appauth.AuthorizationRequest
 import net.openid.appauth.AuthorizationService
 import net.openid.appauth.AuthorizationServiceConfiguration

@@ -1,4 +1,4 @@
-package com.bignerdranch.android.ktsapplication
+package com.bignerdranch.android.ktsapplication.database
 
 object WorkoutContract {
     const val TABLE_NAME = "workouts_table"

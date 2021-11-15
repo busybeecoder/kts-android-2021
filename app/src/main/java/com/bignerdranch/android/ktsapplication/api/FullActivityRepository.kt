@@ -1,5 +1,6 @@
-package com.bignerdranch.android.ktsapplication
+package com.bignerdranch.android.ktsapplication.api
 
+import com.bignerdranch.android.ktsapplication.api.FullActivity
 import com.bignerdranch.android.ktsapplication.auth.Networking
 
 class FullActivityRepository {

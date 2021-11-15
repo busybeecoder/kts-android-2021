@@ -1,9 +1,10 @@
-package com.bignerdranch.android.ktsapplication
+package com.bignerdranch.android.ktsapplication.Utils
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bignerdranch.android.ktsapplication.R
 import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
 import kotlinx.android.extensions.LayoutContainer
 

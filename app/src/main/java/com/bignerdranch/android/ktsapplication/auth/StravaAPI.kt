@@ -1,7 +1,7 @@
 package com.bignerdranch.android.ktsapplication.auth
 
-import com.bignerdranch.android.ktsapplication.Activities
-import com.bignerdranch.android.ktsapplication.FullActivity
+import com.bignerdranch.android.ktsapplication.api.Activities
+import com.bignerdranch.android.ktsapplication.api.FullActivity
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
